@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <!-- Custom Barcode Print Template -->
+        <template id="custom_barcode_print">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="product">
+                        <div class="col-md-6">
+                            <table style="width:243pt; height:153pt; border: 1pt solid black; border-collapse:separate; border-radius:8pt; margin:5pt">
+                                <td style="width:67%" valign="center">
+                                    <table style="width:155pt; height:85pt" class="table-borderless">
+                                        <tr>
+                                            <th>
+                                                <div style="font-size:15pt; margin-bottom:0pt;margin-top:0pt;"
+                                                     align="center">
+                                                    <t t-esc="product.name"/>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div style="font-size:15pt; margin-bottom:0pt;margin-top:0pt;"
+                                                     align="center">
+                                                    <t t-esc="product.categ_id.name"/>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div t-if="product.barcode" t-field="product.barcode"
+                                                     t-options="{'widget': 'barcode', 'width': 600, 'height': 120, 'img_style': 'max-height:50pt;max-width:100%;', 'img_align': 'center'}"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div style="font-size:15pt; margin-bottom:0pt;margin-top:0pt;"
+                                                     align="center">
+                                                    <t t-esc="product.barcode"/>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </table>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

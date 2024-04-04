@@ -1,0 +1,42 @@
+<odoo>
+    <data>
+        <!-- Inherit Product Template View-->
+        <record id="view_product_template_form_inherit" model="ir.ui.view">
+            <field name="name">product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="after">
+                    <label for= "barcode" string="Generate/Print" class="o_form_label">Barcode</label>
+                    <button name="action_generate_random_barcode" string="Generate" type="object" class="btn btn-link"
+                            attrs="{'invisible': [('barcode', '!=', False)]}"/>
+                    <button name="print_custom_barcode" string="Print" type="object" class="btn btn-link"
+                            attrs="{'invisible': [('barcode', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- Inherit Stock Picking View-->
+        <record id="product_barcode_picking" model="ir.ui.view">
+            <field name="name">Product Barcode</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_id']" position="after">
+                    <field name="barcode"/>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']"
+                       position="before">
+                    <field name="barcode"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- Report Action Custom Barcode Print called by the print button -->
+        <record id="report_action_custom_barcode_print" model="ir.actions.report">
+            <field name="name">Print Product Barcode</field>
+            <field name="model">product.template</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">custom_fields_products.custom_barcode_print</field>
+            <field name="report_file">custom_fields_products.custom_barcode_print</field>
+        </record>
+    </data>
+</odoo>
